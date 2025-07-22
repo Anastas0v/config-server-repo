@@ -1,0 +1,48 @@
+server:
+  port: 9191
+# Routes for Microservices
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: EMPLOYEE-SERVICE
+              uri: lb://EMPLOYEE-SERVICE
+              predicates:
+                - Path=/api/employees/**
+            - id: DEPARTMENT-SERVICE
+              uri: lb://DEPARTMENT-SERVICE
+              predicates:
+                - Path=/api/departments/**
+            - id: ORGANIZATION-SERVICE
+              uri: lb://ORGANIZATION-SERVICE
+              predicates:
+                - Path=/api/organization/**
+# Uncomment below if using service ID routing (optional)
+# ex. http://localhost:9191/{serviceID}/api/employees/**
+# serviceID = EMPLOYEE-SERVICE, DEPARTMENT-SERVICE...etc
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true
+
+# Eureka instance configuration
+eureka:
+  instance:
+    hostname: localhost  # Hostname to register in Eureka
+    prefer-ip-address: false  # Prefer hostname over IP for registration
+    instance-id: ${spring.application.name}:${random.value}  # Unique instance ID using app name + random value
+
+# Expose all actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+#
+# Logging for route mapping (for debugging)
+# Optional: Uncomment to debug route mapping
+#logging:
+#  level:
+#    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
