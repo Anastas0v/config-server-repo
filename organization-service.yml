@@ -14,6 +14,9 @@ spring:
 
 # Eureka client configuration
 eureka:
+  client:
+    register-with-eureka: true  # Register this service with Eureka
+    fetch-registry: true  # Fetch other services from Eureka
   instance:
     hostname: localhost  # Hostname used for Eureka registration
     prefer-ip-address: false  # Prefer hostname over IP

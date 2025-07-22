@@ -20,7 +20,7 @@ spring:
             - id: ORGANIZATION-SERVICE
               uri: lb://ORGANIZATION-SERVICE
               predicates:
-                - Path=/api/organization/**
+                - Path=/api/organizations/**
 # Uncomment below if using service ID routing (optional)
 # ex. http://localhost:9191/{serviceID}/api/employees/**
 # serviceID = EMPLOYEE-SERVICE, DEPARTMENT-SERVICE...etc
