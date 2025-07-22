@@ -11,30 +11,6 @@ spring:
     hibernate:
       ddl-auto: update  # Automatically update the DB schema based on entities
 
-#Uncomment if using RabbitMQ for Spring Cloud Bus
-#rabbitmq:
-#  host: localhost  # RabbitMQ server host
-#  port: 5672  # RabbitMQ port
-#  username: guest  # RabbitMQ username
-#  password: guest  # RabbitMQ password
-
 # Custom application property
 properties:
   message: Hello From Employee Service - Spring cloud bus demo  # Example message used for config refresh demo
-
-# Eureka client configuration
-eureka:
-  client:
-    register-with-eureka: true  # Register this service with Eureka
-    fetch-registry: true  # Fetch other services from Eureka
-  instance:
-    hostname: localhost  # Hostname used for Eureka registration
-    prefer-ip-address: false  # Prefer hostname over IP
-    instance-id: ${spring.application.name}:${random.value}  # Unique instance ID using app name and random value
-
-#Uncomment to expose all actuator endpoints
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"  # Expose all actuator endpoints
