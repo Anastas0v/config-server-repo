@@ -15,3 +15,54 @@ spring:
 # Custom application property
 properties:
   message: Hello From Employee Service - Spring cloud bus demo  # Example message used for config refresh demo
+
+#Uncomment if using RabbitMQ for Spring Cloud Bus
+#rabbitmq:
+#  host: localhost  # RabbitMQ server host
+#  port: 5672  # RabbitMQ port
+#  username: guest  # RabbitMQ username
+#  password: guest  # RabbitMQ password
+
+# Eureka client configuration
+eureka:
+  client:
+    register-with-eureka: true  # Register this service with Eureka
+    fetch-registry: true  # Fetch other services from Eureka
+  instance:
+    hostname: localhost  # Hostname used for Eureka registration
+    prefer-ip-address: false  # Prefer hostname over IP
+    instance-id: ${spring.application.name}:${random.value}  # Unique instance ID using app name and random value
+
+# Actuator endpoint config for circuit breaker visibility
+management:
+  health:
+    circuitbreakers:
+      enabled: true  # Enable circuit breaker health info
+  endpoints:
+    web:
+      exposure:
+        include: health  # Expose only health endpoint
+  endpoint:
+    health:
+      show-details: always  # Always show detailed health status
+
+# Resilience4j circuit breaker configuration for EMPLOYEE-SERVICE
+resilience4j:
+  circuitbreaker:
+    instances:
+      EMPLOYEE-SERVICE:
+        register-health-indicator: true
+        failure-rate-threshold: 50  # % of failed calls before circuit opens
+        minimum-number-of-calls: 5  # Minimum calls before evaluating failure rate
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state:
+          seconds: 5  # Wait before moving to half-open state
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: COUNT_BASED
+  retry:
+    instances:
+      EMPLOYEE-SERVICE:
+        max-attempts: 5  # Number of retry attempts
+        wait-duration:
+          seconds: 1  # Wait time between retries
