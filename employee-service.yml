@@ -52,7 +52,7 @@ resilience4j:
     instances:
       EMPLOYEE-SERVICE:
         register-health-indicator: true
-        failure-rate-threshold: 50  # % of failed calls before circuit opens
+        failure-rate-threshold: 50  # % of failed calls before circuit opens ------- REMOVEME
         minimum-number-of-calls: 5  # Minimum calls before evaluating failure rate
         automatic-transition-from-open-to-half-open-enabled: true
         wait-duration-in-open-state:
