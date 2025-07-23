@@ -62,7 +62,15 @@ resilience4j:
         sliding-window-type: COUNT_BASED
   retry:
     instances:
-      EMPLOYEE-SERVICE:
-        max-attempts: 5  # Number of retry attempts
-        wait-duration:
-          seconds: 1  # Wait time between retries
+      department-service:
+        max-attempts: 5
+        wait-duration: 1s
+        retry-exceptions:
+          - feign.FeignException
+          - org.springframework.web.client.RestClientException
+      organization-service:
+        max-attempts: 5
+        wait-duration: 1s
+        retry-exceptions:
+          - feign.FeignException
+          - org.springframework.web.client.RestClientException
