@@ -3,9 +3,22 @@ server:
   port: 9191  # Port where the API Gateway Service runs
 
 # Routes for Microservices
+# CORS Policy
 spring:
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
       server:
         webflux:
           routes:
